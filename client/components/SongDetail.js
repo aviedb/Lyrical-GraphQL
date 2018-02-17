@@ -4,20 +4,23 @@ import { Link } from 'react-router'
 
 import fetchSong from '../queries/fetchSong'
 import LyricCreate from './LyricCreate'
+import LyricList from './LyricList'
 
 class SongDetail extends Component {
   render() {
+    const { song, loading, error } = this.props.data
 
-    if(this.props.data.loading) {
+    if(loading) {
       return <div></div>
-    } else if(this.props.data.error) {
+    } else if(error) {
       return <div>404 Song not found!</div>
     }
 
     return (
       <div>
         <Link to="/">Back</Link>
-        <h3>{this.props.data.song.title}</h3>
+        <h3>{song.title}</h3>
+        <LyricList lyrics={song.lyrics}/>
         <LyricCreate songId={this.props.params.id}/>
       </div>
     )
